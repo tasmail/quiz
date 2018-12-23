@@ -24,7 +24,12 @@ Some examples (model - class or model name)::
 import peewee as pw
 
 from app_log import log
+from server.db.models.question import Question
+from server.db.models.question_choice import QuestionChoice
+from server.db.models.quiz import Quiz
 from server.db.models.user import User
+from server.db.models.user_answer import UserAnswer
+from server.db.models.user_quiz import UserQuiz
 
 try:
     import playhouse.postgres_ext as pw_pext
@@ -37,10 +42,20 @@ SQL = pw.SQL
 def migrate(migrator, database, fake=False, **kwargs):
     log.info('Creating database tables...')
     migrator.create_model(User)
+    migrator.create_model(Quiz)
+    migrator.create_model(Question)
+    migrator.create_model(QuestionChoice)
+    migrator.create_model(UserQuiz)
+    migrator.create_model(UserAnswer)
     log.info('Database tables created. OK')
 
 
 def rollback(migrator, database, fake=False, **kwargs):
     log.info('Drop all database tables...')
+    migrator.create_model(UserAnswer)
+    migrator.create_model(UserQuiz)
+    migrator.create_model(QuestionChoice)
+    migrator.create_model(Question)
+    migrator.create_model(Quiz)
     migrator.create_model(User)
     log.info('All database tables dropped. OK')

@@ -1,0 +1,4 @@
+/.idea
+/ng/package-lock.json
+/venv
+*.pyc

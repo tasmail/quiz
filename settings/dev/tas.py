@@ -1,4 +1,4 @@
-from settings.base import *
+from .example_data import *
 
 LOGGING['handlers']['app'] = {
     'level': 'DEBUG',

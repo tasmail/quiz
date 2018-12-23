@@ -3,6 +3,7 @@ import os
 from peewee_migrate import Router
 from peewee_migrate.router import CURDIR
 
+from server.db.models.user import User
 from .models.base_model import db
 from settings.settings import SETTINGS_DATABASE
 
@@ -31,8 +32,8 @@ def init_db():
 
 
 def create_db_data(data):
-    users = load_data(data)
+    users = data.get('users', None)
+    if users:
+        for user in users:
+            User.create(user)
 
-def load_data(data):
-    users = {}
-    return users

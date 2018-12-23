@@ -9,15 +9,17 @@ class User(BaseModel):
     login = CharField(max_length=128, null=False, unique=True)
     password = CharField(max_length=128, null=False)
     is_admin = BooleanField(default=False)
-    image = BlobField()
+    image = BlobField(null=True)
 
     @staticmethod
-    def create(login, password, image, is_admin=False):
+    def create(user):
+        login = user.get('login', '')
         users = User.select(User.id).where(User.login == login)
         if users.count():
             return Errors.user_is_already_exists(login)
         else:
-            User.insert(login=login, password=password, image=image, is_admin=is_admin).execute()
+            User.insert(login=login, password=user.get('password', ''), image=user.get('image', None),
+                        is_admin=user.get('is_admin', False)).execute()
             log.info('User create OK. login:{}'.format(login))
         return Errors.no_error()
 
@@ -26,6 +28,6 @@ class User(BaseModel):
         users = User.select(User.id).where(User.login == login)
         if not users.count():
             return Errors.user_not_found(login)
-        User.delete().where(User.id == users.get().id).execute()
+        User.delete().where(User.id << users).execute()
         log.info('User remove OK. login:{}'.format(login))
         return Errors.no_error()

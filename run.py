@@ -15,8 +15,7 @@ if not settings_found:
 from server.api_service import ApiService
 from server.db.init import init_db
 from server.db.models.base_model import db
-from server.ng.angular_handler import AngularHandler
-from settings.settings import SETTINGS_LISTEN, SETTINGS_API, SETTINGS_ANGULAR
+from settings.settings import SETTINGS_LISTEN
 
 try:
     import os
@@ -33,7 +32,7 @@ except Exception as e:
 
 
 class Application(tornado.web.Application):
-    def __init__(self, handlers, settings, db):
+    def __init__(self, handlers, settings):
         super(Application, self).__init__(handlers, **settings)
         self.db = db
 
@@ -44,34 +43,13 @@ def main():
     log.info('')
 
     try:
-        static_path = os.path.join(os.path.dirname(__file__), "ng/dist/")
-        angular_handler_args = dict(
-            path=static_path,
-            default_filename='index.html'
-        )
-
-        settings = dict(
-        )
-
-        handlers = []
-        if SETTINGS_API.get('enabled', False):
-            log.info('Initializing database...')
-            init_db()
-            log.info('Database initialized.')
-
-            handlers = ApiService.get_handlers()
-
-        if SETTINGS_ANGULAR.get('enabled', False):
-            list.extend(handlers,
-                        [
-                            ('/', AngularHandler, angular_handler_args),
-                            ('/(.*)', AngularHandler, angular_handler_args)
-                        ])
+        log.info('Initializing database...')
+        init_db()
+        log.info('Database initialized.')
 
         app = Application(
-            handlers=handlers,
-            settings=settings,
-            db=db
+            handlers=ApiService.get_handlers(),
+            settings=dict()
         )
 
         port = SETTINGS_LISTEN.get('port', 8888)

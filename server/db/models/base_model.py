@@ -1,13 +1,13 @@
 import datetime
+import json
 
 from peewee import Model, AutoField, DateTimeField
 from playhouse.db_url import connect
 
-from settings.settings import SETTINGS_DATABASE, SETTINGS_API
+from settings.base import DEFAULT_SERVER_DATETIME_FORMAT
+from settings.settings import SETTINGS_DATABASE
 
-db = None
-if SETTINGS_API.get('enabled', False):
-    db = connect(SETTINGS_DATABASE.get('url'))
+db = connect(SETTINGS_DATABASE.get('url'))
 
 
 class BaseModel(Model):
@@ -28,3 +28,17 @@ class BaseModel(Model):
 
     class Meta:
         database = db
+
+    def to_dict(self):
+        r = {}
+        for k in self._meta.fields.keys():
+            try:
+                val = getattr(self, k)
+                if isinstance(val, datetime.date) \
+                        or isinstance(val, datetime.datetime) or isinstance(val, datetime.time):
+                    r[k] = val.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+                else:
+                    r[k] = val
+            except:
+                r[k] = json.dumps(getattr(self, k))
+        return r

@@ -8,7 +8,6 @@ DEFAULT_SERVER_DATETIME_FORMAT = "%s %s" % (
     DEFAULT_SERVER_DATE_FORMAT,
     DEFAULT_SERVER_TIME_FORMAT)
 
-
 LISTEN = dict(
     # address to bind to
     address='0.0.0.0',
@@ -18,7 +17,7 @@ LISTEN = dict(
 )
 
 API = dict(
-    enabled=True,
+    disable_cors=False,
     # X-API-Key with key value, should be present in the requests header, if specified.
     key=None,
 )
@@ -28,11 +27,6 @@ DATABASE = dict(
     url='sqlite:///quiz.db',
     sql_log_enabled=False,
     data=[]
-)
-
-ANGULAR = dict(
-    enabled=False,
-    disable_cors=False,
 )
 
 if os.name == 'posix':

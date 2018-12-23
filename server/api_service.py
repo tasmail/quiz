@@ -5,6 +5,6 @@ class ApiService:
     @staticmethod
     def get_handlers():
         handlers = [
-            ('/api/user', UserHandler),
+            ('/api/v1/user', UserHandler),
         ]
         return handlers

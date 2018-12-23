@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+import sys
 
 from tornado.ioloop import IOLoop
+
+settings_found = False
+for arg in sys.argv:
+    if arg.startswith('--settings'):
+        settings_found = True
+
+if not settings_found:
+    sys.argv.append('--settings=settings.base')
 
 from server.api_service import ApiService
 from server.db.init import init_db

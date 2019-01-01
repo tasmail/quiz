@@ -37,6 +37,8 @@ class BaseModel(Model):
                 if isinstance(val, datetime.date) \
                         or isinstance(val, datetime.datetime) or isinstance(val, datetime.time):
                     r[k] = val.strftime(DEFAULT_SERVER_DATETIME_FORMAT)
+                elif isinstance(val, BaseModel):
+                    r[k + '_id'] = val.id
                 else:
                     r[k] = val
             except:

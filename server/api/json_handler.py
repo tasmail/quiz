@@ -39,7 +39,7 @@ class JsonHandler(tornado.web.RequestHandler):
         self.write(output)
 
     def set_default_headers(self):
-        self.set_header('Content-Type', 'application/json')
+        self.set_header('Content-Type', 'application/json; charset=UTF-8')
 
         if SETTINGS_API.get('disable_cors'):
             self.set_header("Access-Control-Allow-Origin", "*")

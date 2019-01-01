@@ -12,22 +12,13 @@ class User(BaseModel):
     image = BlobField(null=True)
 
     @staticmethod
-    def create(user):
-        login = user.get('login', '')
+    def create(data):
+        login = data.get('login', '')
         users = User.select(User.id).where(User.login == login)
         if users.count():
             return Errors.user_is_already_exists(login)
         else:
-            User.insert(login=login, password=user.get('password', ''), image=user.get('image', None),
-                        is_admin=user.get('is_admin', False)).execute()
+            User.insert(login=login, password=data.get('password', ''), image=data.get('image', None),
+                        is_admin=data.get('is_admin', False)).execute()
             log.info('User create OK. login:{}'.format(login))
-        return Errors.no_error()
-
-    @staticmethod
-    def remove(login):
-        users = User.select(User.id).where(User.login == login)
-        if not users.count():
-            return Errors.user_not_found(login)
-        User.delete().where(User.id << users).execute()
-        log.info('User remove OK. login:{}'.format(login))
         return Errors.no_error()

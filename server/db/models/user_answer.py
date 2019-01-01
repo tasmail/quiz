@@ -15,7 +15,9 @@ class UserAnswer(BaseModel):
     is_right = BooleanField(default=False)
 
     @staticmethod
-    def create(user_quiz_id, question_choice_id):
+    def create(data):
+        user_quiz_id = data['user_quiz_id']
+        question_choice_id = data['question_choice_id']
         user_answers = UserAnswer.select(UserAnswer.id).where(UserAnswer.user_quiz == user_quiz_id,
                                                               Question.question_choice == question_choice_id)
         if user_answers.count():
@@ -24,15 +26,4 @@ class UserAnswer(BaseModel):
             UserAnswer.insert(user_quiz=user_quiz_id, question_choice=question_choice_id).execute()
             log.info(
                 'UserAnswer create OK. user_quiz_id:{}, question_choice_id:{}'.format(user_quiz_id, question_choice_id))
-        return Errors.no_error()
-
-    @staticmethod
-    def remove(user_quiz_id, question_choice_id):
-        user_answers = UserAnswer.select(UserAnswer.id).where(UserAnswer.user_quiz == user_quiz_id,
-                                                              Question.question_choice == question_choice_id)
-        if not user_answers.count():
-            return Errors.user_answer_not_found(user_quiz_id, question_choice_id)
-        UserAnswer.delete().where(Question.id << user_answers).execute()
-        log.info(
-            'UserAnswer remove OK. user_quiz_id:{}, question_choice_id:{}.'.format(user_quiz_id, question_choice_id))
         return Errors.no_error()

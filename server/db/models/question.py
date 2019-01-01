@@ -17,20 +17,13 @@ class Question(BaseModel):
         )
 
     @staticmethod
-    def create(question, quiz_id):
+    def create(data):
+        question = data['question']
+        quiz_id = data['quiz_id']
         questions = Question.select(Question.id).where(Question.question == question, Question.quiz == quiz_id)
         if questions.count():
             return Errors.question_is_already_exists(question)
         else:
             Question.insert(question=question, quiz_id=quiz_id).execute()
             log.info('Question create OK. question:{}'.format(question))
-        return Errors.no_error()
-
-    @staticmethod
-    def remove(question, quiz_id):
-        questions = Question.select(Question.id).where(Question.question == question, Question.quiz == quiz_id)
-        if not questions.count():
-            return Errors.question_not_found(question)
-        Question.delete().where(Question.id << questions).execute()
-        log.info('Question remove OK. question:{}'.format(question))
         return Errors.no_error()

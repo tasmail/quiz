@@ -3,6 +3,9 @@ import os
 from peewee_migrate import Router
 from peewee_migrate.router import CURDIR
 
+from server.db.models.question import Question
+from server.db.models.question_choice import QuestionChoice
+from server.db.models.quiz import Quiz
 from server.db.models.user import User
 from .models.base_model import db
 from settings.settings import SETTINGS_DATABASE
@@ -37,3 +40,17 @@ def create_db_data(data):
         for user in users:
             User.create(user)
 
+    quizzes = data.get('quizzes', None)
+    if quizzes:
+        for quiz in quizzes:
+            Quiz.create(quiz)
+
+    questions = data.get('questions', None)
+    if questions:
+        for question in questions:
+            Question.create(question)
+
+    question_choices = data.get('question-choices', None)
+    if question_choices:
+        for question_choice in question_choices:
+            QuestionChoice.create(question_choice)

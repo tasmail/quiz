@@ -14,7 +14,10 @@ class JsonHandler(tornado.web.RequestHandler):
         # Incorporate request JSON into arguments dictionary.
         if self.request.body:
             try:
-                json_data = json.loads(self.request.body)
+                if isinstance(self.request.body, bytes):
+                    json_data = json.loads(self.request.body.decode("utf-8"))
+                else:
+                    json_data = json.loads(self.request.body)
                 for item in json_data:
                     data = json_data.get(item, False)
                     self.request.arguments[item] = [data]

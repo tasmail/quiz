@@ -37,10 +37,11 @@ class DatabaseHandler(JsonHandler):
         self.write_json(response=res)
 
     def post(self, *args, **kwargs):
-        user_id = self.get_argument('id', None)
+        model_id = self.get_argument('id', None)
+        self.model_class.insert()
 
     def put(self, *args, **kwargs):
-        pass
+        model_id = self.get_argument('id', None)
 
     def delete(self, *args, **kwargs):
-        user_id = self.get_argument('id', None)
+        model_id = self.get_argument('id', None)

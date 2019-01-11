@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-
 from settings.base import *
 
+API['disable_cors'] = True
+
 DATABASE['data'] = {
     'users': [
         {

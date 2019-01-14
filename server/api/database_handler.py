@@ -126,9 +126,11 @@ class DatabaseHandler(JsonHandler):
                 data[argument] = arguments[0]
         try:
             if not model_id:
-                res = self.model_class.insert(data).execute()
+                res_id = self.model_class.insert(data).execute()
                 self.set_status(201)
-                self.write_json(response={'id': res})
+                qs = self.model_class.select().where(self.model_class.id == res_id).select()
+                for item in qs:
+                    self.write_json(response=item.to_dict())
             else:
                 self.model_class.update(data).where(self.model_class.id == model_id).execute()
         except IntegrityError as ex:

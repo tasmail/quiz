@@ -40,22 +40,10 @@ SQL = pw.SQL
 
 
 def migrate(migrator, database, fake=False, **kwargs):
-    log.info('Creating database tables...')
-    migrator.create_model(User)
-    migrator.create_model(Quiz)
-    migrator.create_model(Question)
-    migrator.create_model(QuestionChoice)
-    migrator.create_model(UserQuiz)
-    migrator.create_model(UserAnswer)
-    log.info('Database tables created. OK')
+    log.info('Add column image to Quiz table.')
+    migrator.add_columns(Quiz, image=pw.BlobField(null=True))
 
 
 def rollback(migrator, database, fake=False, **kwargs):
-    log.info('Drop all database tables...')
-    migrator.remove_model(UserAnswer)
-    migrator.remove_model(UserQuiz)
-    migrator.remove_model(QuestionChoice)
-    migrator.remove_model(Question)
-    migrator.remove_model(Quiz)
-    migrator.remove_model(User)
-    log.info('All database tables dropped. OK')
+    log.info('Drop column image from Quiz table.')
+    migrator.drop_columns(Quiz, image=pw.BlobField(null=True))

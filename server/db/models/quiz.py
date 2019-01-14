@@ -7,6 +7,7 @@ from .base_model import BaseModel
 
 class Quiz(BaseModel):
     name = CharField(max_length=128, null=False, unique=True)
+    image = BlobField(null=True)
 
     @staticmethod
     def create(data):

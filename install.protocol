@@ -1,0 +1,10 @@
+sudo docker run \
+     --name quiz.maxcrc.de \
+     -e SETTINGS="settings.dev.example_data" \
+     -e VIRTUAL_PORT=8283 \
+     -e VIRTUAL_HOST="quiz.maxcrc.de" \
+     -v /var/lib/quiz/quiz.maxcrc.de/var/log/quiz:/var/log/quiz \
+     -v /var/lib/quiz/quiz.maxcrc.de/var/lib/quiz:/var/lib/quiz \
+     -v /var/lib/quiz/quiz.maxcrc.de/opt/quiz:/opt/quiz \
+     -td \
+     tas/quiz

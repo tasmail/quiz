@@ -46,7 +46,7 @@ class JsonHandler(tornado.web.RequestHandler):
             self.set_header("Access-Control-Allow-Headers", "x-requested-with, content-type")
             self.set_header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS')
 
-    def options(self):
+    def options(self, *args, **kwargs):
         if SETTINGS_API.get('disable_cors'):
             self.set_status(204)
             self.finish()

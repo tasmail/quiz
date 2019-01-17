@@ -16,12 +16,26 @@ DATABASE['data'] = {
             'is_admin': False
         },
     ],
+    'quiz-categories': [
+        {
+            'name': 'Category 1',
+            'comments': 'Some comments on Category 1',
+        },
+        {
+            'name': 'Category 2',
+            'comments': 'Some comments on Category 2',
+        },
+    ],
     'quizzes': [
         {
             'name': 'Test 1',
+            'category_id': 1,
+            'comments': 'Some comments on quiz Test 1',
         },
         {
             'name': 'Test 2',
+            'category_id': 2,
+            'comments': 'Some comments on quiz Test 2',
         },
     ],
     'questions': [

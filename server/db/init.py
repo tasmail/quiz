@@ -6,6 +6,7 @@ from peewee_migrate.router import CURDIR
 from server.db.models.question import Question
 from server.db.models.question_choice import QuestionChoice
 from server.db.models.quiz import Quiz
+from server.db.models.quiz_category import QuizCategory
 from server.db.models.user import User
 from .models.base_model import db
 from settings.settings import SETTINGS_DATABASE
@@ -39,6 +40,11 @@ def create_db_data(data):
     if users:
         for user in users:
             User.create(user)
+
+    quiz_categories = data.get('quiz-categories', None)
+    if quiz_categories:
+        for quiz_category in quiz_categories:
+            QuizCategory.create(quiz_category)
 
     quizzes = data.get('quizzes', None)
     if quizzes:

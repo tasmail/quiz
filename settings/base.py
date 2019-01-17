@@ -1,6 +1,6 @@
 import os
 
-APP_NAME = 'Quiz'
+APP_NAME = 'quiz'
 
 DEFAULT_SERVER_DATE_FORMAT = "%Y-%m-%d"
 DEFAULT_SERVER_TIME_FORMAT = "%H:%M:%S"

@@ -6,7 +6,7 @@ from .base_model import BaseModel
 
 
 class User(BaseModel):
-    login = CharField(max_length=128, null=False, unique=True)
+    login = CharField(max_length=128, null=False, unique=True, index=True)
     password = CharField(max_length=128, null=False)
     is_admin = BooleanField(default=False)
     image = BlobField(null=True)

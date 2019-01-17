@@ -7,7 +7,7 @@ from .base_model import BaseModel
 
 
 class Question(BaseModel):
-    question = CharField(max_length=2048, null=False)
+    question = CharField(max_length=2048, null=False, index=True)
     quiz = ForeignKeyField(Quiz, backref='questions', index=True)
     is_active = BooleanField(default=True)
 

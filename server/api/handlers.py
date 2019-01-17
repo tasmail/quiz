@@ -2,6 +2,7 @@ from server.api.database_handler import DatabaseHandler
 from server.db.models.question import Question
 from server.db.models.question_choice import QuestionChoice
 from server.db.models.quiz import Quiz
+from server.db.models.quiz_category import QuizCategory
 from server.db.models.user import User
 from server.db.models.user_answer import UserAnswer
 from server.db.models.user_quiz import UserQuiz
@@ -23,6 +24,12 @@ class QuizHandler(DatabaseHandler):
     @property
     def model_class(self):
         return Quiz
+
+
+class QuizCategoryHandler(DatabaseHandler):
+    @property
+    def model_class(self):
+        return QuizCategory
 
 
 class UserHandler(DatabaseHandler):

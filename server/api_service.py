@@ -1,5 +1,5 @@
 from server.api.handlers import UserHandler, QuestionHandler, QuestionChoiceHandler, QuizHandler, UserAnswerHandler, \
-    UserQuizHandler
+    UserQuizHandler, QuizCategoryHandler
 
 
 class ApiService:
@@ -12,6 +12,8 @@ class ApiService:
             ('/api/v1/question-choice', QuestionChoiceHandler),
             ('/api/v1/quiz/([0-9]+)', QuizHandler),
             ('/api/v1/quiz', QuizHandler),
+            ('/api/v1/quiz-category/([0-9]+)', QuizCategoryHandler),
+            ('/api/v1/quiz-category', QuizCategoryHandler),
             ('/api/v1/user/([0-9]+)', UserHandler),
             ('/api/v1/user', UserHandler),
             ('/api/v1/user-answer/([0-9]+)', UserAnswerHandler),

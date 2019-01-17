@@ -27,6 +27,7 @@ from app_log import log
 from server.db.models.question import Question
 from server.db.models.question_choice import QuestionChoice
 from server.db.models.quiz import Quiz
+from server.db.models.quiz_category import QuizCategory
 from server.db.models.user import User
 from server.db.models.user_answer import UserAnswer
 from server.db.models.user_quiz import UserQuiz
@@ -42,6 +43,7 @@ SQL = pw.SQL
 def migrate(migrator, database, fake=False, **kwargs):
     log.info('Creating database tables...')
     migrator.create_model(User)
+    migrator.create_model(QuizCategory)
     migrator.create_model(Quiz)
     migrator.create_model(Question)
     migrator.create_model(QuestionChoice)
@@ -57,5 +59,6 @@ def rollback(migrator, database, fake=False, **kwargs):
     migrator.remove_model(QuestionChoice)
     migrator.remove_model(Question)
     migrator.remove_model(Quiz)
+    migrator.remove_model(QuizCategory)
     migrator.remove_model(User)
     log.info('All database tables dropped. OK')
